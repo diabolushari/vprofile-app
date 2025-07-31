@@ -13,8 +13,10 @@ RUN apt-get update && \
 ENV JAVA_HOME=/usr/lib/jvm/jdk-21
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Install Maven 3.9.5
+# Define Maven version BEFORE using it
 ARG MAVEN_VERSION=3.9.5
+
+# Install Maven
 RUN set -e && \
     wget --progress=dot:giga -O /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
     mkdir -p /opt && \
