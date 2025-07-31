@@ -13,13 +13,14 @@ RUN apt-get update && \
 ENV JAVA_HOME=/usr/lib/jvm/jdk-21
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Install Maven 3.9.6
+# Install Maven 3.9.5
+ARG MAVEN_VERSION=3.9.5
 RUN set -e && \
-    wget --progress=dot:giga -O /tmp/apache-maven-3.9.6-bin.tar.gz https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz && \
+    wget --progress=dot:giga -O /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
     mkdir -p /opt && \
-    tar -xzf /tmp/apache-maven-3.9.6-bin.tar.gz -C /opt && \
-    ln -s /opt/apache-maven-3.9.6 /opt/maven && \
-    rm /tmp/apache-maven-3.9.6-bin.tar.gz
+    tar -xzf /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt && \
+    ln -s /opt/apache-maven-${MAVEN_VERSION} /opt/maven && \
+    rm /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 
 ENV MAVEN_HOME=/opt/maven
 ENV PATH=$MAVEN_HOME/bin:$PATH
