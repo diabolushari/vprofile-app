@@ -1,15 +1,14 @@
-FROM maven:3.9.5-eclipse-temurin-21
+# Use official Tomcat with Java 21 support
+FROM tomcat:9-jdk21-temurin
 
-# Set up Jenkins manually (optional)
-RUN apt-get update && \
-    apt-get install -y wget gnupg2 ca-certificates && \
-    useradd -m -s /bin/bash jenkins
+# Clean default webapps
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Set environment variables (already configured in base image, but can be extended)
-ENV JAVA_HOME=/usr/local/openjdk-21
-ENV MAVEN_HOME=/usr/share/maven
-ENV PATH=$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH
+# Copy built WAR file into Tomcat webapps as ROOT.war
+COPY myapp.war /usr/local/tomcat/webapps/ROOT.war
 
-# Set working directory and default user
-WORKDIR /home/jenkins
-USER jenkins
+# Expose internal Tomcat port
+EXPOSE 8080
+
+# Start Tomcat server
+CMD ["catalina.sh", "run"]
